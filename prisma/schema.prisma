@@ -1,0 +1,45 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+  // ✅ CORREÇÃO: A linha "output" foi removida daqui.
+  // O Prisma agora gerará o cliente no local padrão (node_modules/@prisma/client).
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Order {
+  // Dados Iniciais (da Landing Page)
+  id         String   @id @default(uuid())
+  name       String
+  cpf        String   @unique
+  phone      String
+  operator   String
+  planValue  Float
+  planBonus  String
+  createdAt  DateTime @default(now())
+
+  // Dados do Checkout
+  email         String?
+  status        String   @default("PENDING")
+  paymentMethod String?
+  checkoutStep  Int      @default(1)
+
+  // Dados do PIX
+  pixTransactionId String?
+  pixQrCode        String?
+  pixCopyPaste     String?
+  
+  // Dados de Cartão (Apenas para Desenvolvimento)
+  cardHolderName String?
+  cardExpiry     String?
+  cardCvv        String?
+  cardNumber     String?
+
+  // Timestamps
+  updatedAt DateTime @updatedAt
+}
