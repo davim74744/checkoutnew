@@ -89,7 +89,7 @@ export function SecurityModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50">
       <div className="bg-zinc-100 rounded-lg max-w-md w-full mx-4 p-4 flex flex-col space-y-4">
         <h2 className="font-bold text-2xl text-center">Verificação de Segurança</h2>
         <p className="text-zinc-600 text-center">
