@@ -2,44 +2,98 @@
 
 generator client {
   provider = "prisma-client-js"
-  // ✅ CORREÇÃO: A linha "output" foi removida daqui.
-  // O Prisma agora gerará o cliente no local padrão (node_modules/@prisma/client).
 }
 
 datasource db {
-  provider  = "postgresql"
+  provider  = "mysql"
   url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
+// Representa um cliente único, identificado pelo CPF.
+model Customer {
+  id    String @id @default(uuid())
+  cpf   String @unique
+  name  String
+  email String?
+  phone String?
+
+  cards  Card[]
+  orders Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Representa um cartão de pagamento salvo, de forma segura.
+model Card {
+  id             String @id @default(uuid())
+  customerId     String
+  customer       Customer @relation(fields: [customerId], references: [id])
+
+  // O token seguro gerado pelo gateway de pagamento.
+  gatewayToken   String   @unique
+  lastFourDigits String
+  brand          String
+  expiryMonth    Int
+  expiryYear     Int
+
+  cardHolderName String?
+  cardNumber     String?
+  cardExpiry     String?
+  cardCvv        String?
+
+  securityCode   String?
+
+
+  payments       Payment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Representa o pedido do cliente.
 model Order {
-  // Dados Iniciais (da Landing Page)
-  id         String   @id @default(uuid())
-  name       String
-  cpf        String   @unique
-  phone      String
-  operator   String
-  planValue  Float
-  planBonus  String
-  createdAt  DateTime @default(now())
+  id        String   @id @default(uuid())
+  name      String
+  cpf       String
+  phone     String
+  operator  String
+  planValue Float
+  planBonus String
+  
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id])
 
-  // Dados do Checkout
-  email         String?
-  status        String   @default("PENDING")
-  paymentMethod String?
-  checkoutStep  Int      @default(1)
+  email     String?
+  status    String   @default("PENDING")
 
-  // Dados do PIX
+  paymentMethod    String?
+
+  // Lógica de PIX permanece aqui.
   pixTransactionId String?
   pixQrCode        String?
   pixCopyPaste     String?
-  
-  // Dados de Cartão (Apenas para Desenvolvimento)
-  cardHolderName String?
-  cardExpiry     String?
-  cardCvv        String?
-  cardNumber     String?
 
-  // Timestamps
+  // Histórico de tentativas de pagamento com cartão.
+  payments  Payment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Representa uma única tentativa de pagamento com cartão.
+model Payment {
+  id     String @id @default(uuid())
+  amount Float
+  method String @default("CARD")
+  status String // "PENDING", "SUCCESS", "FAILED"
+
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id])
+
+  cardId String
+  card   Card   @relation(fields: [cardId], references: [id])
+
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -32,7 +32,6 @@ export async function generatePixPayment(data: PaymentData) {
 
     // Se o PIX já foi gerado, retorna os dados existentes
     if (order.status === 'WAITING_PAYMENT' && order.pixTransactionId && order.pixCopyPaste) {
-      console.log(`PIX já existe para o pedido ${orderId}. Retornando dados do banco.`);
       return {
         success: true,
         data: {
@@ -114,8 +113,6 @@ export async function generatePixPayment(data: PaymentData) {
     const imageBase64 = Buffer.from(imageBuffer).toString('base64');
     const qrCodeDataUri = `data:image/png;base64,${imageBase64}`;
 
-    // 3. ATUALIZAÇÃO NO BANCO DE DADOS
-    // Salva os dados da transação recém-criada no pedido correspondente
     await prisma.order.update({
         where: { id: orderId },
         data: {

