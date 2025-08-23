@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Resumo do Pedido • Recarga de Celular</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji'; }
+  </style>
+</head>
+<body class="min-h-screen bg-orange-50">
+  <header class="border-b border-orange-200/60 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+    <div class="mx-auto max-w-3xl px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="h-9 w-9 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 shadow ring-1 ring-black/5 grid place-items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.115 5.19A9 9 0 112.25 12h3.864m0 0A6 6 0 1112 17.75 6 6 0 016.115 12z" />
+          </svg>
+        </div>
+        <span class="text-xl font-semibold text-orange-700">Recarga Já</span>
+      </div>
+      <div class="hidden sm:flex items-center gap-3 text-sm">
+        <div class="inline-flex items-center gap-2 rounded-full bg-orange-100 px-3 py-1 text-orange-700">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75" />
+          </svg>
+          <span>Entrega instantânea</span>
+        </div>
+        <div class="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1 text-emerald-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016.999 4H3a2 2 0 00-.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+          <span>Comprovante por e‑mail</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-3xl px-4 py-8">
+    <div class="grid gap-6 md:grid-cols-5">
+      <!-- Card principal -->
+      <section class="md:col-span-3">
+        <div class="relative overflow-hidden rounded-2xl border border-orange-200/70 bg-white shadow-sm">
+          <div class="absolute inset-0 pointer-events-none opacity-[0.07]" aria-hidden="true">
+            <div class="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-gradient-to-tr from-orange-400 to-amber-300 blur-3xl"></div>
+            <div class="absolute -left-20 -bottom-24 h-60 w-60 rounded-full bg-gradient-to-br from-amber-400 to-orange-300 blur-3xl"></div>
+          </div>
+
+          <div class="relative p-6 sm:p-8">
+            <div class="mb-6 flex items-start justify-between gap-4">
+              <div>
+                <h1 class="text-2xl font-semibold text-orange-900">Resumo do Pedido</h1>
+                <p class="text-sm text-orange-700/80">Confira os detalhes antes de confirmar sua recarga.</p>
+              </div>
+              <span class="inline-flex items-center gap-1 rounded-full bg-orange-100 px-3 py-1 text-xs font-medium text-orange-700">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM11 10h2v6h-2v-6zm0-4h2v2h-2V6z"/></svg>
+                Segurança garantida
+              </span>
+            </div>
+
+            <!-- Dados principais -->
+            <div class="space-y-5">
+              <div class="grid grid-cols-3 gap-3 rounded-xl border border-orange-200 bg-orange-50/60 p-4">
+                <div>
+                  <p class="text-xs text-orange-700/70">Número</p>
+                  <p class="mt-1 font-semibold text-orange-900">(11) 98765-4321</p>
+                </div>
+                <div>
+                  <p class="text-xs text-orange-700/70">Operadora</p>
+                  <p class="mt-1 font-semibold text-orange-900">Claro</p>
+                </div>
+                <div>
+                  <p class="text-xs text-orange-700/70">Plano</p>
+                  <p class="mt-1 font-semibold text-orange-900">Pré-pago</p>
+                </div>
+              </div>
+
+              <div class="rounded-xl border border-orange-200/70 p-4">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="h-10 w-10 shrink-0 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 grid place-items-center text-white">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.192-.128 1.192.488V9.75h6.066c.621 0 .934.752.494 1.192L10.5 21.75V14.25H4.434a.75.75 0 01-.53-1.28L9.75 7.125"/></svg>
+                    </div>
+                    <div>
+                      <p class="font-medium text-orange-900">Recarga selecionada</p>
+                      <p class="text-sm text-orange-700/80">Créditos válidos por 30 dias</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-lg font-semibold text-orange-900">R$ 30,00</p>
+                    <p class="text-xs text-orange-700/70 line-through">R$ 35,00</p>
+                  </div>
+                </div>
+
+                <!-- Bonus badges -->
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <span class="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-medium text-emerald-700">
+                    +2GB Bônus
+                  </span>
+                  <span class="inline-flex items-center gap-1 rounded-full bg-sky-100 px-2.5 py-1 text-xs font-medium text-sky-700">
+                    WhatsApp ilimitado
+                  </span>
+                  <span class="inline-flex items-center gap-1 rounded-full bg-fuchsia-100 px-2.5 py-1 text-xs font-medium text-fuchsia-700">
+                    Ligações ilimitadas
+                  </span>
+                  <span class="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-800">
+                    Cashback 5%
+                  </span>
+                </div>
+              </div>
+
+              <!-- Cupom -->
+              <div class="rounded-xl border border-orange-200/70 p-4">
+                <div class="flex items-center justify-between gap-3">
+                  <div class="flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-orange-600"><path d="M4.5 4.5h15v4a2 2 0 11 0 4v4h-15v-4a2 2 0 110-4v-4z"/></svg>
+                    <div>
+                      <p class="font-medium text-orange-900">Cupom aplicado</p>
+                      <p class="text-sm text-orange-700/80">PROMO10 • Desconto de R$ 3,00</p>
+                    </div>
+                  </div>
+                  <button class="text-sm font-medium text-orange-700 hover:text-orange-800">Remover</button>
+                </div>
+              </div>
+
+              <!-- Pagamento -->
+              <div class="rounded-xl border border-orange-200/70 p-4">
+                <p class="mb-3 font-medium text-orange-900">Pagamento</p>
+                <div class="grid gap-3 sm:grid-cols-3">
+                  <label class="flex items-center gap-3 rounded-lg border border-orange-200 bg-orange-50/40 p-3 hover:border-orange-300 cursor-pointer">
+                    <input type="radio" name="pay" class="text-orange-600" checked>
+                    <span class="text-sm text-orange-900">Pix</span>
+                  </label>
+                  <label class="flex items-center gap-3 rounded-lg border border-orange-200 bg-orange-50/40 p-3 hover:border-orange-300 cursor-pointer">
+                    <input type="radio" name="pay" class="text-orange-600">
+                    <span class="text-sm text-orange-900">Cartão</span>
+                  </label>
+                  <label class="flex items-center gap-3 rounded-lg border border-orange-200 bg-orange-50/40 p-3 hover:border-orange-300 cursor-pointer">
+                    <input type="radio" name="pay" class="text-orange-600">
+                    <span class="text-sm text-orange-900">Boleto</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Totais -->
+            <div class="mt-6 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 p-1">
+              <div class="rounded-xl bg-white p-4 sm:p-5">
+                <div class="space-y-2 text-sm">
+                  <div class="flex items-center justify-between text-orange-900/90">
+                    <span>Subtotal</span>
+                    <span>R$ 30,00</span>
+                  </div>
+                  <div class="flex items-center justify-between text-orange-900/90">
+                    <span>Descontos</span>
+                    <span>- R$ 3,00</span>
+                  </div>
+                  <div class="flex items-center justify-between text-orange-900/90">
+                    <span>Taxas</span>
+                    <span>R$ 0,00</span>
+                  </div>
+                  <div class="border-t border-orange-200 pt-2 flex items-center justify-between text-base font-semibold text-orange-950">
+                    <span>Total a pagar</span>
+                    <span>R$ 27,00</span>
+                  </div>
+                </div>
+
+                <div class="mt-4 grid gap-3 sm:grid-cols-2">
+                  <button class="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-orange-600 to-amber-500 px-4 py-3 text-white font-semibold shadow hover:from-orange-700 hover:to-amber-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"/></svg>
+                    Confirmar recarga
+                  </button>
+                  <button class="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-3 text-orange-800 font-semibold ring-1 ring-orange-300 hover:bg-orange-50 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2">
+                    Ver detalhes
+                  </button>
+                </div>
+
+                <p class="mt-3 text-xs text-orange-800/80">
+                  Ao continuar, você concorda com os termos de uso e política de privacidade.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sidebar resumo -->
+      <aside class="md:col-span-2">
+        <div class="sticky top-4 space-y-6">
+          <div class="rounded-2xl border border-orange-200/70 bg-white p-5 shadow-sm">
+            <div class="mb-4 flex items-center justify-between">
+              <h2 class="font-semibold text-orange-900">Benefícios da recarga</h2>
+              <span class="rounded-full bg-orange-100 px-2 py-0.5 text-xs font-medium text-orange-700">Plano Plus</span>
+            </div>
+            <ul class="space-y-3 text-sm text-orange-900/90">
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 text-emerald-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M9 12.75L11.25 15 15 9.75"/></svg>
+                </span>
+                2GB extras por 7 dias
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 text-emerald-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M9 12.75L11.25 15 15 9.75"/></svg>
+                </span>
+                Apps de mensagem sem descontar da franquia
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 text-emerald-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M9 12.75L11.25 15 15 9.75"/></svg>
+                </span>
+                Ligações e SMS ilimitados para todo o Brasil
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 text-emerald-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M9 12.75L11.25 15 15 9.75"/></svg>
+                </span>
+                Cashback de 5% em próximas recargas
+              </li>
+            </ul>
+            <div class="mt-5 rounded-lg bg-orange-50 p-3 text-xs text-orange-900/90">
+              Bônus são aplicados automaticamente após a confirmação do pagamento.
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-orange-200/70 bg-white p-5 shadow-sm">
+            <h3 class="mb-3 font-semibold text-orange-900">Detalhes do pedido</h3>
+            <dl class="space-y-2 text-sm text-orange-900/90">
+              <div class="flex justify-between"><dt>Recarga</dt><dd>R$ 30,00</dd></div>
+              <div class="flex justify-between"><dt>Desconto (PROMO10)</dt><dd>- R$ 3,00</dd></div>
+              <div class="flex justify-between"><dt>Taxas</dt><dd>R$ 0,00</dd></div>
+              <div class="border-t border-orange-200 pt-2 flex justify-between font-semibold text-orange-950"><dt>Total</dt><dd>R$ 27,00</dd></div>
+            </dl>
+            <div class="mt-4 grid gap-2">
+              <button class="inline-flex items-center justify-center gap-2 rounded-lg bg-orange-600 px-4 py-2.5 text-white text-sm font-semibold hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2">
+                Finalizar com Pix
+              </button>
+              <button class="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-2.5 text-orange-800 text-sm font-semibold ring-1 ring-orange-300 hover:bg-orange-50">
+                Alterar método de pagamento
+              </button>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-orange-200/70 bg-gradient-to-r from-orange-500 to-amber-500 p-1">
+            <div class="rounded-xl bg-white p-4">
+              <div class="flex items-center gap-3">
+                <div class="h-10 w-10 shrink-0 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 grid place-items-center text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75"/></svg>
+                </div>
+                <div class="text-sm">
+                  <p class="font-semibold text-orange-900">Selo de confiança</p>
+                  <p class="text-orange-700/80">Pagamento 100% seguro e protegido</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="mx-auto max-w-3xl px-4 py-8 text-center text-xs text-orange-800/80">
+    © 2025 Recarga Já. Todos os direitos reservados.
+  </footer>
+</body>
+</html>
